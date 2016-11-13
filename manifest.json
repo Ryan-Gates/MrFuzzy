@@ -1,8 +1,8 @@
 {
 
-  "description": "Adds browser action icon to toolbar to choose user agent string from popup menu. See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples#user-agent-rewriter",
+  "description": "Protects user from being fingerprinted",
   "manifest_version": 2,
-  "name": "user-agent-rewriter",
+  "name": "MR Fuzzy",
   "version": "1.0",
   "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/user-agent-rewriter",
   "icons": {
@@ -11,28 +11,29 @@
 
   "applications": {
     "gecko": {
-      "id": "user-agent-rewriter@mozilla.org",
+      "id": "MRFuzzy@mozilla.org",
       "strict_min_version": "45.0"
     }
   },
 
   "permissions": [
-    "webRequest", "webRequestBlocking"
+    "webRequest", "webRequestBlocking","storage"
   ],
   
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [ "background.js" ],
+    "persistent" : true
   },
 
-  "content_scripts" : [{
-  "matches" : ["<all_urls>"],
-  "js": ["screenspoof.js"],
-  "run_at": "document_start"
-  }],
-  "browser_action": {
-    "default_icon": "icons/person-32.png",
-    "default_title": "Choose a user agent",
-    "default_popup": "popup/choose_ua.html"
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "screenspoof.js" ]
+    }
+  ],
+
+  "options_ui": {
+    "page": "options.html"
   }
 
 }
