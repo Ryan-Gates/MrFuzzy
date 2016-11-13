@@ -18,6 +18,19 @@ sets.then(function (results) {
     settings = results;
 }, onError);
 
+function ChookieTracker(changeInfo) {
+
+    if (settings.AllowCookies) {
+        console.log('Cookie changed: ' +
+                '\n * Cookie: ' + JSON.stringify(changeInfo.cookie) +
+                '\n * Cause: ' + changeInfo.cause +
+                '\n * Removed: ' + changeInfo.removed);
+    } else {
+        console.log("I eat the Cookies!!!!");
+    }
+    
+}
+
 function logURL(requestDetails) {
   //console.log("Loading: " + requestDetails.url);
   //console.log(Math.floor(Math.random()*3));
@@ -32,17 +45,11 @@ function logURL(requestDetails) {
           } else {
               header.value = ua;
           }
-    } 
+      }
   }
   return { requestHeaders: requestDetails.requestHeaders };
-  
-  
-}
 
-browser.webRequest.onBeforeSendHeaders.addListener(
-  logURL,
-        { urls: ["<all_urls>"] },
-        ["blocking", "requestHeaders"]);
+}
 
 function onError(error) {
     console.log(`Error: ${error}`);
@@ -59,7 +66,7 @@ function logStorageChange(changes, area) {
         console.log("Changing local");
 
         for (item of changedItems) {
-            console.log("Changing local " +item+" "+ settings[item] + " " + changes[item].newValue);
+            console.log("Changing local " + item + " " + settings[item] + " " + changes[item].newValue);
             settings[item] = changes[item].newValue;
         }
     } else {
@@ -76,4 +83,15 @@ function logStorageChange(changes, area) {
         }
     }
 }
+
+//-------------------------------Set Listiners ---------------------------------------------------
+browser.webRequest.onBeforeSendHeaders.addListener(logURL, { urls: ["<all_urls>"] },["blocking", "requestHeaders"]);
+
 browser.storage.onChanged.addListener(logStorageChange);
+
+browser.cookies.onChanged.addListener(function (tabId, changeInfo, tab) {
+    console.log('Cookie changed: ' +
+                '\n * Cookie: ' + JSON.stringify(changeInfo.cookie) +
+                '\n * Cause: ' + changeInfo.cause +
+                '\n * Removed: ' + changeInfo.removed);
+});

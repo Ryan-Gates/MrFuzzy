@@ -17,7 +17,7 @@
   },
 
   "permissions": [
-    "webRequest", "webRequestBlocking","storage"
+    "webRequest", "webRequestBlocking","storage","cookie","tabs"
   ],
   
   "background": {
@@ -28,7 +28,9 @@
   "content_scripts": [
     {
       "matches": [ "<all_urls>" ],
-      "js": [ "screenspoof.js" ]
+      "js": [ "screenspoof.js" ],
+      "run_at": "document_start"
+      
     }
   ],
 
