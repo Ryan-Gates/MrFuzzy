@@ -7,9 +7,12 @@ in the javascript run time.
 
 #Current features:
 
-Fuzz the demintions that canbe colleced by the browser
+Fuzz the screen dimensions that can be collected by the browser
+
 Present a consestant fake Useragent string
+
 strip plugin information from the JS runtime
+
 
 #Todo:
 Figure out a full feature set
