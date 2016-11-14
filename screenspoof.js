@@ -49,8 +49,11 @@ script.setAttribute("type", "text/javascript");
 script.setAttribute("charset", "UTF-8");
 var winwidthpwn = '\n window.__defineGetter__(\"innerWidth\",function () { return ' + getwiw() + '});';
 var winhighthpwn = '\n window.__defineGetter__(\"innerHeight\",function () { return ' + getwih() + '});';
+var winoutdthpwn = '\n window.__defineGetter__(\"outerWidth\",function () { return ' + getwiw() + '});';
+var winhoutthpwn = '\n window.__defineGetter__(\"outerHeight\",function () { return ' + getwih() + '});';
 var pluginnuke = '\n window.navigator.__defineGetter__(\"plugins\",function () { return \'\'});';
-var newContent = document.createTextNode("function setUserAgent(window, userAgent) { if (window.navigator.userAgent != userAgent) { var userAgentProp = { get: function () { return userAgent; } }; try { Object.defineProperty(window.navigator, 'userAgent', userAgentProp);  } catch (e) { window.navigator = Object.create(navigator, { userAgent: userAgentProp  });  } } } \n \n setUserAgent(window,\"" + ua + "\");" + pluginnuke + winhighthpwn + winwidthpwn);
+var juser = "function setUserAgent(window, userAgent) { if (window.navigator.userAgent != userAgent) { var userAgentProp = { get: function () { return userAgent; } }; try { Object.defineProperty(window.navigator, 'userAgent', userAgentProp);  } catch (e) { window.navigator = Object.create(navigator, { userAgent: userAgentProp  });  } } } \n \n setUserAgent(window,\"" + ua + "\");"
+var newContent = document.createTextNode(juser + pluginnuke + winhighthpwn + winwidthpwn + winoutdthpwn + winhoutthpwn);
 script.appendChild(newContent);
 
 doc.head.appendChild(script);
